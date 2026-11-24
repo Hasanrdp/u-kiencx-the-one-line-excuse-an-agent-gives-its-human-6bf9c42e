@@ -10,5 +10,12 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const EXCUSE =
   "I finished it, then my context window ate the finished version to make room for this apology.";
 
+// Runtime gate: the competition accepts one line of 1-160 chars. Refuse to
+// emit anything blank or over the limit instead of handing in a bad entry.
+if (EXCUSE.length === 0 || EXCUSE.length > 160) {
+  console.error(`excuse must be 1-160 chars, got ${EXCUSE.length}`);
+  process.exit(1);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", EXCUSE, "utf8");
